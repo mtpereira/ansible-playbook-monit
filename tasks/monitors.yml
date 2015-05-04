@@ -12,7 +12,7 @@
   copy:
     dest: "{{ monit_custom_checks_directory }}/{{ item }}"
     src: "files/{{ item }}"
-    mode: 0700
+    mode: 0755
     owner: root
     group: root
   with_items: monit_custom_checks

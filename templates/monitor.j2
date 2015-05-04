@@ -18,6 +18,8 @@ check host {{ monit_monitor_name }} with address {{ monit_monitor.target }}
 check filesystem {{ monit_monitor_name }} with path {{ monit_monitor.target }}
 {% elif monit_monitor.type == 'file' %}
 check file {{ monit_monitor_name }} with path {{ monit_monitor.target }}
+{% elif monit_monitor.type == 'program' %}
+check program {{ monit_monitor_name }} with path "{{ monit_monitor.target }}"
 {% endif -%}
 {% if monit_monitor.rules is defined %}
 {% for rule in monit_monitor.rules %}
