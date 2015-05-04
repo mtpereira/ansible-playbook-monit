@@ -3,6 +3,9 @@ monit_log_destination: /var/log/monit.log
 monit_state_file: /var/lib/monit/state
 monit_id_file: /var/lib/monit/id
 
+monit_custom_checks: []
+monit_custom_checks_directory: /var/lib/monit/checks
+
 monit_services: []
 monit_service_delete_unlisted: true
 monit_start_monitors: true

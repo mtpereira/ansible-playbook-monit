@@ -1,4 +1,22 @@
 ---
+
+- name: monitors - custom checks directory
+  file:
+    path: "{{ monit_custom_checks_directory }}"
+    owner: root
+    group: root
+    state: directory
+  when: monit_custom_checks is defined and monit_custom_checks | length > 0
+
+- name: monitors - custom checks
+  copy:
+    dest: "{{ monit_custom_checks_directory }}/{{ item }}"
+    src: "files/{{ item }}"
+    mode: 0700
+    owner: root
+    group: root
+  with_items: monit_custom_checks
+
 - name: monitors - Write monitors
   template:
     src: monitor.j2
