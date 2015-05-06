@@ -24,7 +24,7 @@
     owner: root
     group: root
   with_items: monit_services
-  notify: restart monit
+  notify: reload monit
 
 - name: monitors - Create facts directory
   file:
@@ -55,7 +55,7 @@
     state: absent
   with_items: monit_services_present.stdout_lines
   when: monit_service_delete_unlisted and item|basename not in ansible_local.monit.monit_configured_services
-  notify: restart monit
+  notify: reload monit
 
 - meta: flush_handlers
 
@@ -63,3 +63,4 @@
   command: monit start {{ item }}
   with_items: ansible_local.monit.monit_configured_services
   when: monit_start_monitors and ansible_local.monit.monit_configured_services is defined and item not in monit_unstartable_monitors
+
