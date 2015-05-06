@@ -71,3 +71,51 @@
   roles:
     - .
 
+- name: monit - testing reloads
+  hosts: all
+  sudo: yes
+  tags: monit_tests_reloads
+
+  pre_tasks:
+    - name: testing - get current pid before changes
+      command: cat /var/run/monit.pid
+      changed_when: false
+      register: monit_tests_pid_before
+
+    - name: testing - set new list of monitors
+      set_fact:
+        monit_services:
+          - name: sshd
+            type: process
+            target: /var/run/sshd.pid
+            start: /usr/sbin/service sshd start
+            stop: /usr/sbin/service sshd stop
+
+  roles:
+    - .
+
+  post_tasks:
+    - name: testing - get current pid
+      command: cat /var/run/monit.pid
+      changed_when: false
+      register: monit_tests_pid_after
+
+    - name: testing - assert that pid didn't change
+      assert:
+        that: "monit_tests_pid_after.stdout == monit_tests_pid_before.stdout"
+
+    - name: testing - get monit status output after reload
+      command: monit status
+      changed_when: false
+      register: monit_tests_status_after
+
+    - name: testing - assert that status doesn't include any of the removed services
+      assert:
+        that:
+          - "item not in monit_tests_status_after.stdout"
+      with_items:
+        - apache
+        - localhost
+        - google
+        - timezone_config
+
