@@ -19,8 +19,9 @@ Role Variables
 * `monit_eventqueue_slots`: Event queue slots. It is only used when `monit_eventqueue_dir` is defined. Defaults to `100`.
 * `monit_services`: List of hashes of services to be monitorized by monit.
   * `name`: Name of the process or host.
-  * `type`: Type of monitorization, "process", "host" and "system" are supported.
+  * `type`: Type of monitorization, "process", "host", "system", "filesystem", "file" and "program" are supported.
   * `target`: Target of monitorization. Should be a pidfile, an address or undefined, depending on the `type` of service.
+  * `match`: On "process" monitors, check process state by matching the process name with a regexp provided on this field.
   * `start`: Command that starts the service. Optional.
   * `stop`: Command that stop the service. Optional.
   * `rules`: List of rules to be included in this service. Optional.
