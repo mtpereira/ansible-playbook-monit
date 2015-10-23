@@ -52,6 +52,10 @@
       assert:
         that: "monit_tests_pid_after.stdout == monit_tests_pid_before.stdout"
 
+    - name: testing - sleep for awhile
+      pause:
+        seconds: 25
+
     - name: testing - get monit status output after reload
       command: monit status
       changed_when: false
