@@ -5,8 +5,7 @@ vmname = File.basename(File.expand_path(File.dirname(__FILE__)))
 
 Vagrant.configure("2") do |config|
   config.vm.define vmname do |ap|
-    ap.vm.box = "opscode-debian-7.4.0"
-    ap.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.4_chef-provisionerless.box"
+    ap.vm.box = "boxcutter/ubuntu1404"
     ap.vm.hostname = vmname
 
     ap.vm.provider "virtualbox" do |v|
