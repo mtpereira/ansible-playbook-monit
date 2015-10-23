@@ -8,6 +8,11 @@ monit_services:
     target: /var/run/sshd.pid
     start: /usr/sbin/service sshd start
     stop: /usr/sbin/service sshd stop
+  - name: sshd-match
+    type: process
+    match: '/\w+/sshd -D'
+    start: /usr/sbin/service sshd start
+    stop: /usr/sbin/service sshd stop
   - name: apache
     type: process
     target: /var/run/apache2.pid

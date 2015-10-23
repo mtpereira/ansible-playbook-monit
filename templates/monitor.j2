@@ -3,7 +3,11 @@
 # Managed by Ansible, do not edit manually!
 
 {% if monit_monitor.type == 'process' %}
+{% if monit_monitor.target is defined %}
 check process {{ monit_monitor_name }} with pidfile {{ monit_monitor.target }}
+{% elif monit_monitor.match is defined %}
+check process {{ monit_monitor_name }} with matching "{{ monit_monitor.match }}"
+{% endif %}
 {% if monit_monitor.start is defined %}
   start program = "{{ monit_monitor.start }}"
 {% endif %}
